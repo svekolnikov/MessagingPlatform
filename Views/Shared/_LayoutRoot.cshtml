@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewBag.Title - Messaging Platform</title>
+    
+    @await Html.PartialAsync("Partial/_Styles")
+    
+    @await RenderSectionAsync("Styles", false)
+</head>
+<body>
+    <div>
+        @RenderBody()
+        
+        @await Html.PartialAsync("Partial/_Scripts")
+        
+        @await RenderSectionAsync("Scripts", false)
+    </div>
+</body>
+</html>
