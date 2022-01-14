@@ -363,3 +363,6 @@ MigrationBackup/
 FodyWeavers.xsd
 /wwwroot/lib/bootstrap
 /UI/wwwroot/lib/bootstrap
+/UI/wwwroot/lib/jquery
+/UI/wwwroot/lib/jquery-validate
+/UI/wwwroot/lib/jquery-validation-unobtrusive
