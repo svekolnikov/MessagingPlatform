@@ -12,8 +12,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Infrastructure\AutoFac\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\MessagingPlatform.DAL\MessagingPlatform.DAL.csproj" />
+    <ProjectReference Include="..\Services\MessagingPlatform.Interfaces\MessagingPlatform.Interfaces.csproj" />
+    <ProjectReference Include="..\Services\MessagingPlatform.Services\MessagingPlatform.Services.csproj" />
   </ItemGroup>
 
 </Project>

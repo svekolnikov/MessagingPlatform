@@ -1,21 +1,29 @@
-﻿using MessagingPlatform.MVC.ViewModels;
+﻿using System.Runtime.CompilerServices;
+using AutoMapper;
+using MessagingPlatform.Interfaces;
+using MessagingPlatform.MVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MessagingPlatform.MVC.Controllers
 {
     public class Users : Controller
     {
-        public IActionResult Index()
+        private readonly ILogger<Users> _logger;
+        private readonly IUsersManager _usersManager;
+        private readonly IMapper _mapper;
+
+        public Users(ILogger<Users> logger, IUsersManager usersManager, IMapper mapper)
         {
-            var users = Enumerable.Range(1, 10).Select(
-                i =>  new UserViewModel
-                {
-                    Id = i,
-                    FirstName = $"First Name {i}",
-                    LastName = $"Last Name {i}",
-                    Email = $"username_{i}@mycompany.com"
-                }).ToArray();
-            return View(users);
+            _logger = logger;
+            _usersManager = usersManager;
+            _mapper = mapper;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var users = await _usersManager.Users.GetAllAsync();
+            var usersViewModel = _mapper.Map<List<UserViewModel>>(users);
+
+            return View(usersViewModel);
         }
 
         public IActionResult Create()
@@ -31,6 +39,11 @@ namespace MessagingPlatform.MVC.Controllers
         public IActionResult Delete(int id)
         {
             return RedirectToAction(nameof(Index));
+        }
+
+        private void LogError(Exception e, [CallerMemberName] string methodName = null!)
+        {
+            _logger.LogError(e, "Error: {0}", methodName);
         }
     }
 }

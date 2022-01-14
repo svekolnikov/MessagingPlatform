@@ -12,7 +12,7 @@ namespace MessagingPlatform.DAL.Repositories
         private readonly ILogger<DbRepository<T>> _logger;
 
         protected DbSet<T> Set { get; }
-        protected virtual IQueryable<T>? Entities => Set;
+        protected virtual IQueryable<T> Entities => Set;
 
         public DbRepository(DataDbContext dbContext, ILogger<DbRepository<T>> logger)
         {

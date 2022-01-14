@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MessagingPlatform.Interfaces\MessagingPlatform.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\MessagingPlatform.Domain\MessagingPlatform.Domain.csproj" />
     <ProjectReference Include="..\MessagingPlatform.Interfaces.Base\MessagingPlatform.Interfaces.Base.csproj" />
   </ItemGroup>
 
