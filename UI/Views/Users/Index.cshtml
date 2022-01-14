@@ -30,11 +30,13 @@
             <td>@item.FirstName</td>
             <td>@item.LastName</td>
             <td>@item.Email</td>
-            <td>
-                <div class="btn-group w-100">
-                    <a class="btn btn-sm btn-outline-warning w-50" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-sm btn-outline-danger w-50" asp-action="">Delete</a>
-                </div>
+            <td>   
+                <form asp-action="DeleteConfirmed" asp-route-id="@item.Id">
+                    <div class="btn-group w-100">
+                        <a class="btn btn-sm btn-outline-warning w-50" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <input type="submit" class="btn btn-sm btn-outline-danger w-50" value="Delete"/>
+                    </div>
+                </form>
             </td>
         </tr>
     }

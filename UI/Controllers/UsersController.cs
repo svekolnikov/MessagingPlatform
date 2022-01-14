@@ -51,13 +51,61 @@ namespace MessagingPlatform.MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View(new UserViewModel());
+            try
+            {
+                var user = await _usersManager.Users.GetById(id);
+                if (user is null)
+                    return NotFound();
+
+                var userViewModel = _mapper.Map<UserViewModel>(user);
+                return View(userViewModel);
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
         }
 
-        public IActionResult Delete(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserViewModel userViewModel)
         {
+            if (!ModelState.IsValid)
+                return View(userViewModel);
+
+            try
+            {
+                var user = _mapper.Map<User>(userViewModel);
+                await _usersManager.Users.UpdateAsync(user);
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ActionName("DeleteConfirmed")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var user = await _usersManager.Users.GetById(id);
+                if (user is null)
+                    return NotFound();
+
+                await _usersManager.Users.DeleteAsync(user);
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+                throw;
+            }
             return RedirectToAction(nameof(Index));
         }
 

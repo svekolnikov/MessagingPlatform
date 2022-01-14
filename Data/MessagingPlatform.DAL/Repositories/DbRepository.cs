@@ -60,6 +60,10 @@ namespace MessagingPlatform.DAL.Repositories
                 _logger.LogInformation("Entity {0} not found", entity);
                 return false;
             }
+
+            _dbContext.Entry(entity).State = EntityState.Deleted;
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
             _logger.LogInformation("Repository deleted entity: {0}", entity);
             return true;
         }
