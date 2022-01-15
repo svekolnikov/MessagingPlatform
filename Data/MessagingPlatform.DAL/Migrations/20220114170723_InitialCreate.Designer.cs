@@ -23,7 +23,7 @@ namespace MessagingPlatform.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MessagingPlatform.Domain.Entities.User", b =>
+            modelBuilder.Entity("MessagingPlatform.Domain.Entities.ToUsers", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

@@ -28,11 +28,14 @@ namespace MessagingPlatform.MVC.Controllers
             {
                 Subject = "Test Subject",
                 Content = "Test Content",
-                User = new User
+                ToUsers = new List<User>
                 {
-                    Email = "alexey.svekolnikov@gmail.com",
-                    FirstName = "Alexey",
-                    LastName = "Svekolnikov"
+                    new()
+                    {
+                        FirstName = "Alexey",
+                        LastName = "Svekolnikov",
+                        Email = "alexey.svekolnikov@gmail.com"
+                    }
                 }
             };
             try

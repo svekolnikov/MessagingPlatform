@@ -18,7 +18,7 @@ namespace MessagingPlatform.Services.SMTP
         public async Task SendEmailAsync(EmailMessage emailMessage)
         {
 			var message = new MimeMessage();
-            message.To.Add(new MailboxAddress(emailMessage.User.FirstName, emailMessage.User.Email));
+            message.To.AddRange(emailMessage.ToUsers.Select(x => new MailboxAddress("", x.Email)));
             message.From.Add(new MailboxAddress(_emailConfiguration.SenderName,_emailConfiguration.SmtpUsername));
             message.Subject = emailMessage.Subject;
             message.Body = new TextPart(TextFormat.Html)

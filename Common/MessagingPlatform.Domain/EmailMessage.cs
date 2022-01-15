@@ -4,7 +4,7 @@ namespace MessagingPlatform.Domain
 {
     public class EmailMessage
     {
-        public User User { get; set; } = null!;
+        public List<User> ToUsers { get; set; } = null!;
         public string Subject { get; set; } = null!;
         public string Content { get; set; } = null!;
     }
