@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using MessagingPlatform.Domain;
 using MessagingPlatform.Domain.Entities;
+using MessagingPlatform.Interfaces;
 using MessagingPlatform.Interfaces.SMTP;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +11,16 @@ namespace MessagingPlatform.MVC.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly ILogger<MessagingController> _logger;
+        private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
 
-        public MessagingController(IEmailService emailService, ILogger<MessagingController> logger)
+        public MessagingController(
+            IEmailService emailService, 
+            ILogger<MessagingController> logger, 
+            IRazorViewToStringRenderer razorViewToStringRenderer)
         {
             _emailService = emailService;
             _logger = logger;
+            _razorViewToStringRenderer = razorViewToStringRenderer;
         }
         public IActionResult Index()
         {
@@ -22,12 +28,15 @@ namespace MessagingPlatform.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendEmail()
+        public async Task<IActionResult> SendEmailAsync()
         {
+            var body = await _razorViewToStringRenderer
+                .RenderViewToStringAsync("/Views/Shared/Partial/Emails/GreetingEmail.cshtml");
+
             var msg = new EmailMessage
             {
                 Subject = "Test Subject",
-                Content = "Test Content",
+                Content = body,
                 ToUsers = new List<User>
                 {
                     new()

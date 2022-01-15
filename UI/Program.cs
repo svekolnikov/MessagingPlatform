@@ -27,6 +27,9 @@ services.AddSingleton<IEmailConfiguration>(builder
     .Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
 services.AddTransient<IEmailService, EmailService>();
 
+//Razor View to string
+services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+
 var app = builder.Build();
 
 app.UseStaticFiles();
