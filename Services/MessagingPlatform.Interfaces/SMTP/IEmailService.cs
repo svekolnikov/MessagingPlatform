@@ -4,7 +4,7 @@ namespace MessagingPlatform.Interfaces.SMTP
 {
 	public interface IEmailService
     {
-        void Send(EmailMessage emailMessage);
+        Task SendEmailAsync(EmailMessage emailMessage);
         List<EmailMessage> ReceiveEmail(int maxCount = 10);
     }
 }

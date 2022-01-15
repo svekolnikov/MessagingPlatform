@@ -15,7 +15,7 @@ namespace MessagingPlatform.Services.SMTP
         {
             _emailConfiguration = emailConfiguration;
         }
-        public void Send(EmailMessage emailMessage)
+        public async Task SendEmailAsync(EmailMessage emailMessage)
         {
 			var message = new MimeMessage();
             message.To.Add(new MailboxAddress(emailMessage.User.FirstName, emailMessage.User.Email));
@@ -27,16 +27,11 @@ namespace MessagingPlatform.Services.SMTP
             };
 
             using var emailClient = new SmtpClient();
-
-            emailClient.Connect(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);
-            
+            await emailClient.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);
             emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-
-            emailClient.Authenticate(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
-
-            emailClient.Send(message);
-
-            emailClient.Disconnect(true);
+            await emailClient.AuthenticateAsync(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
+            await emailClient.SendAsync(message);
+            await emailClient.DisconnectAsync(true);
         }
 
         public List<EmailMessage> ReceiveEmail(int maxCount = 10)
