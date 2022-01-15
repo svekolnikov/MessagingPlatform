@@ -4,12 +4,16 @@ using MessagingPlatform.DAL.Context;
 using MessagingPlatform.DAL.Repositories;
 using MessagingPlatform.Interfaces;
 using MessagingPlatform.Interfaces.Repositories;
+using MessagingPlatform.Interfaces.SMTP;
 using MessagingPlatform.Services;
+using MessagingPlatform.Services.SMTP;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+// Add services to the container.
 var services = builder.Services;
 services.AddControllersWithViews();
 services.AddDbContext<DataDbContext>(options => options
@@ -17,6 +21,11 @@ services.AddDbContext<DataDbContext>(options => options
 services.AddScoped(typeof(IRepository<>), typeof(DbRepository<>));
 services.AddScoped<IUsersManager, UsersManager>();
 services.AddAutoMapper(Assembly.GetEntryAssembly());
+
+//SMTP
+services.AddSingleton<IEmailConfiguration>(builder
+    .Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+services.AddTransient<IEmailService, EmailService>();
 
 var app = builder.Build();
 
